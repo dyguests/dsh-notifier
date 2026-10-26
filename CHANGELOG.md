@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+## [0.13.2] - 2026-10-26（DSH 0.2.1-rc.3 兼容补丁）
+
+DSH 升级到 `0.2.1-rc.3` 后，插件管理器把本插件判为「异常」：`dsh-notifier@0.13.1 与 DSH 0.2.1-rc.3 不兼容（要求 @deepseek-ai/dsh-session 0.2.1-rc.2）`。根因是 peer 范围被钉死为单一版本 `0.2.1-rc.2`，恰好把正在运行的宿主版本排除在外。
+
+### 修复
+
+- `peerDependencies.@deepseek-ai/dsh-session` 改为 `"0.2.1-rc.2 || 0.2.1-rc.3"`：仍是 exact/OR-exact 写法（不引入 `^`/`>=` 猜测），只把已验证的 `0.2.1-rc.3` 纳入声明范围。
+- `docs/compatibility-matrix.md` 的 `dsh-host-matrix` 同步为两行已验证运行时（`0.2.1-rc.2`、`0.2.1-rc.3`），`0.1.7-rc.2` 降级为范围外的历史行，`0.1.0-rc.6` 继续保持 unverified。
+- `dshWorkshop.compatibility.dshVersions` 与 `scripts/verify-host-compat.mjs` 三方一致性保持由门禁机械校验。
+
+### 验证边界
+
+- `npm test`、`npm run verify:release`、`node scripts/gen-channel-matrix.mjs --check` 全绿（测试总数未变）。
+- 兼容性证据级别：`0.2.1-rc.2` 沿用既有真机运行证据；`0.2.1-rc.3` 为本次改动后的启动装配级证据（在 0.2.1-rc.3 上用一次性 profile 实机启动：插件装配完成、渠道引导日志与回环管理台端口正常、宿主不再报 `incompatible-version`），未重新做 Native 视觉/交互走查，也未新增 provider 投递证据。
+
 ## [0.13.1] - 2026-09-26（v0.13 follow-up release）
 
 本次补丁发行收口 v0.13 后续验证与公开交付边界：管理台补齐中英文资源表与安全内联序列化，公开投递能力改为证据边界表述，npm 白名单覆盖 README 文档/图片并加入包内容回归；高风险专项复核同步完成。

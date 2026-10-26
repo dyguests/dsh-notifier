@@ -31,20 +31,19 @@ No optional SDK is a production runtime dependency.
 Declared peer range:
 
 ```text
-0.1.7-alpha.1 || 0.1.7-alpha.2 || 0.1.7-rc.1 || 0.1.7-rc.2
+0.2.1-rc.2 || 0.2.1-rc.3
 ```
 
 The optional peer marker is `@deepseek-ai/dsh-session`. `scripts/verify-host-compat.mjs` keeps the peer range, matrix and package compatibility metadata aligned.
 
 | DSH | Core Session/Message seams | Native client dependency/slot seams | Native Control Surface evidence | Evidence level |
 |---|---|---|---|---|
-| `0.1.7-alpha.1` | compatible with the v0.11/v0.12 host contract set | connection / locale / renderer / layout / sidebar / plugin-manager packages present; global panel slots exist | plugin activated; control route returned 200; 28-channel projection; `dsh-notifier/client.js` in client-module manifest and served | **host smoke verified** |
-| `0.1.7-alpha.2` | source/artifact seams verified | required client packages present | not claimed as a fresh real-host visual walkthrough in v0.12 release evidence | **contract/source verified** |
-| `0.1.7-rc.1` | source/artifact seams verified | required client packages present | not claimed as a fresh real-host visual walkthrough in v0.12 release evidence | **contract/source verified** |
-| `0.1.7-rc.2` | compatible with current Session/Message contract | required client packages/slots present | Sidebar/Main render, setup wizard, save/test, 28 channels, Hot Apply and fail-closed invalid save exercised in real Host | **host smoke + visual/interaction verified** |
-| `0.1.0-rc.6` | historical only | current Native surface not re-certified | old historical plugin verification only | **unverified for v0.12** |
+| `0.2.1-rc.2` | compatible with the current Session/Message contract | connection / locale / renderer / layout / sidebar / plugin-manager packages present; global panel slots exist | plugin activated in the desktop profile, control route answered 200, 28-channel projection, `dsh-notifier/client.js` in the client-module manifest and served | **host smoke verified** |
+| `0.2.1-rc.3` | compatible with the current Session/Message contract | required client packages/slots present | disposable-profile boot on `0.2.1-rc.3`: plugin assembly ran (channel bootstrap log + loopback admin server listening) with no `incompatible-version` skip; no fresh Native visual walk | **host smoke verified** |
+| `0.1.7-rc.2` | historical (v0.12 line) | required client packages/slots present | Sidebar/Main render, setup wizard, save/test, 28 channels, Hot Apply and fail-closed invalid save exercised in the v0.12 real-host walk | **historical only, no longer in the peer range** |
+| `0.1.0-rc.6` | historical only | current Native surface not re-certified | old historical plugin verification only | **unverified** |
 
-Peer range: `0.1.7-alpha.1 || 0.1.7-alpha.2 || 0.1.7-rc.1 || 0.1.7-rc.2`.
+Peer range: `0.2.1-rc.2 || 0.2.1-rc.3`.
 
 No row is `real-device-verified`; every row is source/artifact or host-smoke evidence.
 
@@ -54,7 +53,7 @@ File admission requires the Host AttachmentStore capability `attachments.saveFil
 legacy host that exposes the attachment service but not `saveFile` is outside the current
 file-inbound support boundary: the plugin fails closed, does not pass a remote URL into the
 Session, and emits a bounded diagnostic in both Chinese and English. The current supported
-host matrix above is the 0.1.7 family; the older 0.1.1-rc.2 shape is retained as a
+host matrix above is the 0.2.1 family; the older 0.1.1-rc.2 shape is retained as a
 compatibility risk, not as a supported target.
 
 The closed #36 follow-up now has one real QQ C2C file-download sample: the URL used
@@ -73,10 +72,9 @@ Machine-readable block (the source of truth for `scripts/verify-host-compat.mjs`
 {
   "peerPackage": "@deepseek-ai/dsh-session",
   "runtimes": [
-    { "version": "0.1.7-alpha.1", "status": "verified", "tag": "dsh-v0.1.7-alpha.1" },
-    { "version": "0.1.7-alpha.2", "status": "verified", "tag": "dsh-v0.1.7-alpha.2" },
-    { "version": "0.1.7-rc.1", "status": "verified", "tag": "dsh-v0.1.7-rc.1" },
-    { "version": "0.1.7-rc.2", "status": "verified", "tag": "dsh-v0.1.7-rc.2" },
+    { "version": "0.2.1-rc.2", "status": "verified", "tag": null },
+    { "version": "0.2.1-rc.3", "status": "verified", "tag": null },
+    { "version": "0.1.7-rc.2", "status": "historical", "tag": "dsh-v0.1.7-rc.2" },
     { "version": "0.1.0-rc.6", "status": "unverified", "tag": null }
   ]
 }

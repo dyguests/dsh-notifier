@@ -15,7 +15,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const packageJson = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'))
 const matrix = parseMatrix(readFileSync(resolve(root, 'docs/compatibility-matrix.md'), 'utf8'))
 
-const VERIFIED = ['0.1.7-alpha.1', '0.1.7-alpha.2', '0.1.7-rc.1', '0.1.7-rc.2']
+const VERIFIED = ['0.2.1-rc.2', '0.2.1-rc.3']
 
 test('host compat: the shipped manifest and matrix verify cleanly', () => {
   assert.notEqual(matrix, null, 'docs/compatibility-matrix.md must carry a dsh-host-matrix block')
@@ -66,16 +66,16 @@ test('host compat: drift is caught — a non-verified runtime must not enter the
 test('host compat: drift is caught — a verified runtime must be covered', () => {
   const drifted = {
     ...packageJson,
-    peerDependencies: { ...packageJson.peerDependencies, '@deepseek-ai/dsh-session': '0.1.7-rc.1' },
+    peerDependencies: { ...packageJson.peerDependencies, '@deepseek-ai/dsh-session': '0.2.1-rc.2' },
   }
   const failures = verifyHostCompat(drifted, matrix)
-  assert.equal(failures.some((line) => /verified runtime 0\.1\.7-rc\.2 is not covered/.test(line)), true)
+  assert.equal(failures.some((line) => /verified runtime 0\.2\.1-rc\.3 is not covered/.test(line)), true)
 })
 
 test('host compat: drift is caught — a guessed caret range is rejected', () => {
   const drifted = {
     ...packageJson,
-    peerDependencies: { ...packageJson.peerDependencies, '@deepseek-ai/dsh-session': '^0.1.7' },
+    peerDependencies: { ...packageJson.peerDependencies, '@deepseek-ai/dsh-session': '^0.2.1' },
   }
   const failures = verifyHostCompat(drifted, matrix)
   assert.equal(failures.some((line) => /not an exact version/.test(line)), true)
@@ -84,7 +84,7 @@ test('host compat: drift is caught — a guessed caret range is rejected', () =>
 test('host compat: drift is caught — the workshop list must match the verified rows', () => {
   const drifted = {
     ...packageJson,
-    dshWorkshop: { ...packageJson.dshWorkshop, compatibility: { dshVersions: ['0.1.7-rc.1'] } },
+    dshWorkshop: { ...packageJson.dshWorkshop, compatibility: { dshVersions: ['0.2.1-rc.2'] } },
   }
   const failures = verifyHostCompat(drifted, matrix)
   assert.equal(failures.some((line) => /dshVersions must equal the verified matrix rows/.test(line)), true)

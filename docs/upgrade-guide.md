@@ -165,7 +165,7 @@ dsh plugin add dsh-notifier@latest --profile <profile名>
 声明范围：
 
 ```text
-0.1.7-alpha.1 || 0.1.7-alpha.2 || 0.1.7-rc.1 || 0.1.7-rc.2
+0.2.1-rc.2 || 0.2.1-rc.3
 ```
 
 ### 保存出站后仍要重启才生效
